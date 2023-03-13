@@ -1,9 +1,11 @@
 import React from 'react'
 import logo from '../assets/images/logo.svg'
 import main from '../assets/images/main.svg'
+import Wrapper from '../assets/wrappers/LandingPage';
 
 function Landing() {
   return (
+    <Wrapper>
     <main>
       <nav>
         <img src={logo} alt="logo" className='logo' />
@@ -19,6 +21,8 @@ function Landing() {
         <img src={main} alt="hero logo of landing page" className='img main-img' />
       </div>
     </main>
+    </Wrapper>
+
   )
 }
 
