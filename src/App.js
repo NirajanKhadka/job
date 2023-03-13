@@ -1,5 +1,4 @@
-import Landing from "./Pages/Landing";
-import styled from 'styled-components'
+import {Landing} from "./Pages";
 
 function App() {
   return (
