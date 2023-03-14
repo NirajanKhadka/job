@@ -354,3 +354,12 @@ ul {
 .Toastify__toast {
     text-transform: capitalize;
 }
+
+.member-btn {
+    /* outline: none; */
+    background-color: transparent;
+    border: none;
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
