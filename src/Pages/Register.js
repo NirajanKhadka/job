@@ -2,6 +2,8 @@ import React, { useState,useEffect } from 'react'
 import Wrapper from '../assets/wrappers/LandingPage'
 import { FormRow, Logo } from '../components'
 import {toast} from 'react-toastify'
+import {useDispatch, useSelector} from 'react-redux'
+import { loginUser, registerUser } from '../features/user/userSlice'
 
 function Register() {
 
@@ -14,11 +16,24 @@ function Register() {
 
   const [values,setValues] = useState(initialState)
 
+  const {isLoading,user} = useSelector(store => store.user)
+  const dispatch = useDispatch() 
+
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log("submitted")
+    // console.log("submitted")
     const {name,email,password,isMember} = values;
-    if ((isMember && !name) || !email || !password){ toast.error("please fill out all the fields") }
+    if ((!isMember && !name) || !email || !password){ 
+      toast.error("please fill out all the fields") 
+      return
+    }
+
+    if(isMember){
+      dispatch(loginUser({password,email}))
+      return
+    }
+
+    dispatch(registerUser({name,password,email}))
   }
 
   const handleChange = (e) => {
@@ -38,11 +53,11 @@ function Register() {
         <Logo />
         <h3>{values.isMember?'Login':'Register'}</h3>
         
-        {values.isMember && <FormRow type='text' name='name' value={values.name} handleChange={handleChange} />}
+        {!values.isMember && <FormRow type='text' name='name' value={values.name} handleChange={handleChange} />}
         <FormRow type='email' name='email'  value={values.email} handleChange={handleChange} />
         <FormRow type='password' name='password' value={values.password} handleChange={handleChange} />
         
-        <button type='submit' className='btn btn-block'>Submit</button>
+        <button type='submit' className='btn btn-block' disabled={isLoading}>Submit</button>
 
         <p>
           {values.isMember?'Not a member?':'Already a member?'}

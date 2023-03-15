@@ -9,8 +9,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element = {<Dashboard />} />
-        <Route path='Landing' element = {<Landing />} />
-        <Route path='Register' element = {<Register />} />
+        <Route path='landing' element = {<Landing />} />
+        <Route path='register' element = {<Register />} />
         <Route path='*' element = {<Error />} />
       </Routes>
       <ToastContainer position='top-center' autoClose={850}/>
