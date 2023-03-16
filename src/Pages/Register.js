@@ -53,6 +53,7 @@ function Register() {
       navigate('/')
     }
   },[user])
+  
   return (
     <Wrapper className='full-page'>
       <form className='form' onSubmit={onSubmit}>
