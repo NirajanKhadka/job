@@ -40,7 +40,7 @@ export const updateUser = createAsyncThunk('user/updateUser', async(user,thunkAP
         return resp.data
     }
         catch(error){
-            if(error.response.status == 401) { 
+            if(error.response.status === 401) { 
                 thunkAPI.dispatch(logoutUser())
                 return thunkAPI.rejectWithValue(`Unauthorized user! Logging out`)
             }
