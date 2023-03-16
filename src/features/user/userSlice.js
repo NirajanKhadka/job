@@ -30,6 +30,25 @@ export const registerUser = createAsyncThunk('user/registerUser', async(user,thu
     }
 })
 
+export const updateUser = createAsyncThunk('user/updateUser', async(user,thunkAPI) => {
+    try{
+        const resp = await customFetch.patch('/auth/updateUser',user,{
+            headers:{
+                Authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+            }
+        })   
+        return resp.data
+    }
+        catch(error){
+            if(error.response.status == 401) { 
+                thunkAPI.dispatch(logoutUser())
+                return thunkAPI.rejectWithValue(`Unauthorized user! Logging out`)
+            }
+            return thunkAPI.rejectWithValue(error.response.data.msg)
+        }
+    }
+)
+
 const userSlice = createSlice({
     name:'user',
     initialState,
@@ -69,9 +88,23 @@ const userSlice = createSlice({
         [loginUser.rejected] : (state,{payload}) => {
             state.isLoading = false
             toast.error(payload)
-        }     
+        },
+        [updateUser.pending] : (state) => {
+            state.isLoading = true
+        },
+        [updateUser.fulfilled] : (state,{payload}) => {
+            const {user} = payload
+            state.isLoading = false
+            state.user = user
+            addUserToLocalStorage(user)
+            toast.success(`Successfully updated information`)
+        },
+        [updateUser.rejected] : (state,{payload}) => {
+            state.isLoading = false
+            toast.error(payload)
+        }
     }
 })
 
-export const {toggleSidebar ,logoutUser} = userSlice.actions
+export const {toggleSidebar, logoutUser} = userSlice.actions
 export default userSlice.reducer
