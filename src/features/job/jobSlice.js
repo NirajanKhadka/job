@@ -36,6 +36,7 @@ const jobSlice = createSlice({
         handleChange:(state, {payload:{name,value}}) => {
             state[name] = value
         },
+        // anything returned from reducers is new state
         clearValues:() => {return {...initialState, jobLocation:getUserFromLocalStorage()?.location || ''}}
     },
     extraReducers:{
