@@ -12,7 +12,9 @@ function JobsContainer() {
   const {isLoading, jobs} = useSelector((store) => store.allJobs )
   const dispatch = useDispatch()
 
-  useEffect(() =>{ dispatch(getAllJobs()) }, [])
+  useEffect(() =>{ 
+    console.log("useEffect called")
+    dispatch(getAllJobs()) }, [])
 
   if (isLoading) {
     return <Loading center/>;
